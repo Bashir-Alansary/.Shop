@@ -1,0 +1,24 @@
+/* hero */
+.swiper-pagination-fraction, 
+.swiper-pagination-custom, 
+.swiper-horizontal > 
+.swiper-pagination-bullets, 
+.swiper-pagination-bullets.swiper-pagination-horizontal {
+  bottom: 80px;
+  right: 80px;
+  left: unset;
+  width: unset;
+  display: flex;
+  align-items: center;
+}
+
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  &.swiper-pagination-bullet-active {
+    width: 20px;
+    height: 20px;
+    border: 6px solid #FE5A1F;
+    background: #fff;
+  }
+}
