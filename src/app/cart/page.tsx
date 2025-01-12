@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { IoTrashBinOutline } from "react-icons/io5";
 import { addToCart, removeFromCart, totalPriceSelector } from '@/lib/slices/cartSlice';
 import ItemQtyActions from '@/components/ItemQtyActions';
+import { applyDiscount } from '@/utils';
+import Breadcrumb from '@/components/Breadcrumb';
 
 const page = () => {
 
@@ -13,7 +15,8 @@ const page = () => {
     const dispatch = useDispatch();
 
   return (
-    <section className='pt-28'>
+    <section>
+        <Breadcrumb title="Cart"/>
         <div className="mx-auto max-w-screen-xl px-4 sm:px-6 sm:py-12 lg:px-8">
             <div className="mx-auto max-w-3xl">
             <header className="text-center">
@@ -24,7 +27,7 @@ const page = () => {
                 <ul className="space-y-4">
                     {
                         cartItems.map(item => {
-                            const {id, thumbnail, title, price, brand, qty} = item;
+                            const {id, thumbnail, title, price, brand, discountPercentage} = item;
                             return (
                                 <li key={id} className="flex items-center gap-4">
                                     <img
@@ -39,12 +42,12 @@ const page = () => {
                                     <dl className="mt-0.5 space-y-px text-[10px] text-gray-600">
                                         <div>
                                         <dt className="inline text-sm font-bold">price: </dt>
-                                        <dd className="inline text-sm font-bold text-secondary">{price}</dd>
+                                        <dd className="inline text-sm font-bold text-secondary">{applyDiscount(price, discountPercentage)}</dd>
                                         </div>
 
                                         <div>
                                         <dt className="inline text-sm font-bold">brand: </dt>
-                                        <dd className="inline text-sm font-bold text-secondary">{brand}/ {qty}</dd>
+                                        <dd className="inline text-sm font-bold text-[gray]">{brand}</dd>
                                         </div>
                                     </dl>
                                     </div>

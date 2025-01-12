@@ -1,26 +1,31 @@
 "use client"
 import { removeFromCart, totalCartItemSelector } from '@/lib/slices/cartSlice';
-import { setShowSubcart } from '@/lib/slices/global';
-import { RootState } from '@/lib/store';
-import { ItemType } from '@/types';
+import { setShowSubcart } from '@/lib/slices/globalSlice';
+import { AppDispatch, RootState } from '@/lib/store';
 import Link from 'next/link';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { IoMdClose } from "react-icons/io";
 import { IoTrashBinOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from 'react-redux';
 import ItemQtyActions from './ItemQtyActions';
+import { applyDiscount } from '@/utils';
+import { fetchProducts } from '@/lib/slices/shopSlice';
 
 const Subcart = () => {
 
-    const {cartItems, qty} = useSelector((state:RootState) => state.cartSlice);
+    const {cartItems} = useSelector((state:RootState) => state.cartSlice);
     const {showSubcart} = useSelector((state:RootState) => state.globalSlice);
-    const dispatch = useDispatch();
-
     const total = useSelector(totalCartItemSelector);
+    const dispatch = useDispatch<AppDispatch>();
+
+    useEffect(()=> {
+        dispatch(fetchProducts());
+    }, [])
+    
 
   return (
     <div
-    className={`${showSubcart? "max-h-[480px]" : "max-h-0 py-0"} group fixed top-24 right-[65px] w-screen max-w-sm bg-slate-100 shadow-md px-4 py-7 sm:px-6 lg:px-8 overflow-hidden transition-all duration-500 ease-in-out`}
+    className={`${showSubcart? "max-h-[480px] py-7" : "max-h-0 py-0"} group fixed top-24 right-[65px] w-screen max-w-sm bg-slate-100 shadow-md px-4 sm:px-6 lg:px-8 overflow-hidden transition-all duration-500 ease-in-out`}
     >
         <button
         className="absolute end-4 top-4 text-gray-600 transition hover:scale-110"
@@ -33,7 +38,7 @@ const Subcart = () => {
             <ul className="space-y-4 max-h-60 overflow-y-hidden group-hover:overflow-y-scroll  group-hover:pr-2">
                 {
                     cartItems.map((item) => {
-                        const {id, thumbnail, title, price, brand, qty} = item;
+                        const {id, thumbnail, title, price, discountPercentage, qty} = item;
                         return (
                             <li key={id} className="flex items-center gap-3">
                                 <img
@@ -44,7 +49,10 @@ const Subcart = () => {
 
                                 <div>
                                 <h3 className="text-[15px] font-bold text-primary">{title}</h3>
-                                <span className='text-sm font-bold text-secondary'>{qty} X {price}</span>
+                                <p className='m-0 text-sm font-bold'>
+                                    <span className='text-[#918d8d]'>{qty} X </span>
+                                    <span className='text-secondary'>${applyDiscount(price, discountPercentage)}</span>
+                                </p>
                                 </div>
 
                                 <div className="flex flex-1 items-center justify-end gap-2">

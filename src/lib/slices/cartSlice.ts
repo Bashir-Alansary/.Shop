@@ -2,6 +2,7 @@ import { CartItemType, ItemType } from '@/types';
 import { createSelector, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../store';
+import { applyDiscount } from '@/utils';
 
 interface ProductQtyType {
   product: ItemType,
@@ -58,7 +59,8 @@ export const totalCartItemSelector = createSelector([cartItems], (cartItems) =>
 )
 
 export const totalPriceSelector = createSelector([cartItems], (cartItems) => 
-  cartItems.reduce((total:number, curr: CartItemType) => (total+= (curr.price * curr.qty)), 1)
+  cartItems.reduce((total:number, curr: CartItemType) => 
+  (total+= (applyDiscount(curr.price, curr.discountPercentage) * curr.qty)), 0)
 )
 
 // Action creators are generated for each case reducer function

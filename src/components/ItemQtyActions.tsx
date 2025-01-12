@@ -1,5 +1,4 @@
 import { addInputValAsQty, addToCart } from '@/lib/slices/cartSlice';
-import { RootState } from '@/lib/store';
 import { CartItemType } from '@/types'
 import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux';

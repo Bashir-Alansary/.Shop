@@ -14,7 +14,7 @@ const Popular = async() => {
                     data.products.map((item:ItemType, index:number) => {
                         if(index < 8) {
                             return (
-                                <Item key={item.id} product = {item} />
+                                <Item itemClass="w-[295px]" product = {item} />
                             )
                         }
                     })

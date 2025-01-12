@@ -20,6 +20,23 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* pagination-btn */
+.pagination-btn {
+  @apply inline-flex size-8 items-center justify-center rounded border border-gray-200 text-primary text-sm
+}
+
+/*add-to-cart-btn*/
+.add-to-cart-btn {
+  @apply px-3 w-20 h-9  
+  bg-[#e3e3e3] text-primary rounded-sm border border-[#dbdbdb] opacity-0 translate-y-4
+  transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100
+}
+
+/*add-qty-btn*/
+.add-qty-btn {
+  @apply px-4 w-24 h-10 bg-[#607D8B] text-white rounded-md
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 10px;

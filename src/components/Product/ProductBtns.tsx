@@ -1,9 +1,7 @@
 "use client"
-import { RootState } from '@/lib/store'
 import { ItemType } from '@/types'
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import AddToCartBtn from './AddToCartBtn'
+import AddToCartBtn from '../AddToCartBtn'
 
 interface Props {
     product: ItemType
@@ -12,20 +10,18 @@ interface Props {
 const ProductBtns = ({product}: Props) => {
 
     const [inputVal, setInputVal] = useState<number>(1);
+    
     const handleChange = (e:any) => {
         if(e.target.value > 0 && e.target.value !== "") {
             setInputVal(parseInt(e.target.value));
-            e.target.style.outline = "2px solid #c5c5c5"
+            e.target.style.outline = "2px solid #c5c5c5";
+            e.target.style.color = "#000"
         } else {
             setInputVal(0);
-            e.target.style.outline = "2px solid red"
+            e.target.style.outline = "2px solid red";
+            e.target.style.color = "red"
         }
     }
-    const cart = useSelector((state:RootState) => state.cartSlice)
-    const dispatch = useDispatch();
-
-    console.log(cart.cartItems);
-    
 
   return (
     <div>
@@ -36,11 +32,11 @@ const ProductBtns = ({product}: Props) => {
             min="1"
             defaultValue={inputVal}
             onChange={handleChange}
-            className="w-12 h-9 text-center rounded-md shadow-sm focus:outline-0" 
+            className="w-14 h-9 py-0 px-2 text-center rounded-md shadow-sm focus:outline-0" 
             />
         </div>
         <div className="flex space-x-4 mb-6">
-            <AddToCartBtn product={product} qty={inputVal}/>
+            <AddToCartBtn addClass='add-qty-btn' product={product} qty={inputVal}/>
             <button
                 className="bg-gray-200 flex gap-2 items-center  text-gray-800 px-6 py-2 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

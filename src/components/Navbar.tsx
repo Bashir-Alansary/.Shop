@@ -2,25 +2,31 @@
 import { navLinks } from '@/constants'
 import { RootState } from '@/lib/store';
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
 import Subcart from './Subcart';
-import { setShowSubcart, toggleSubcart } from '@/lib/slices/global';
+import { setShowSubcart, toggleSubcart } from '@/lib/slices/globalSlice';
 import { totalCartItemSelector } from '@/lib/slices/cartSlice';
 
 const Navbar = () => {
 
-  const {qty} = useSelector((state:RootState) => state.cartSlice);
+  const [activeNav, setActiveNav] = useState<boolean>(false);
   const total = useSelector(totalCartItemSelector);
   const dispatch = useDispatch();
-  console.log(typeof(total));
-  
+
+  window.addEventListener('scroll', ()=> {
+    if (window.scrollY > 100) {
+      setActiveNav(true);
+    } else {
+      setActiveNav(false);
+    }
+  })
 
   return (
-    <header className="fixed top-6 left-0 w-full z-50 bg-transparent">
+    <header className={`${activeNav? "top-0 bg-softGrayBg shadow-md" : "top-6 bg-transparent"} fixed left-0 w-full z-50 transition-all duration-500`}>
   <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-    <div className="flex h-16 items-center justify-between bg-[#fff] rounded-md px-10">
+    <div className={`${activeNav? "bg-softGrayBg" : "bg-white rounded-md"} flex h-16 items-center justify-between px-10`}>
       <div className="flex-1 md:flex md:items-center md:gap-12">
         <Link href="/">
           <img src='/images/logo.png' className='w-24' />
@@ -123,7 +129,7 @@ const Navbar = () => {
         <div className='flex items-center'>
           <div>
             <button
-            className='relative text-[28px] text-primary bg-none p-0 border-none'
+            className='relative block -mb-1 text-[28px] text-primary bg-none p-0 border-none'
             onClick={() => dispatch(toggleSubcart())}
             >
               <MdOutlineShoppingCart/>

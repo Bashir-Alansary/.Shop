@@ -1,12 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface GlobalType {
+interface StateType {
     showSubcart: boolean,
 }
 
-const initialState: GlobalType = {
+const initialState: StateType = {
     showSubcart: false,
 }
+
 
 export const globalSlice = createSlice({
     name: 'globalSlice',
@@ -15,8 +16,9 @@ export const globalSlice = createSlice({
         setShowSubcart: (state, action: PayloadAction<boolean>) => { state.showSubcart = action.payload},
         toggleSubcart: (state) => { state.showSubcart = !state.showSubcart },
 
-    }
+      },
 })
+
 
 export const { setShowSubcart, toggleSubcart } = globalSlice.actions;
 export default globalSlice.reducer;

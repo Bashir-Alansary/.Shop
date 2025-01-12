@@ -44,4 +44,10 @@ export interface CartItemType extends ItemType {
   qty: number,
 }
 
+export type DropdownItemType = {
+  id: number,
+  name: string,
+  value: number| string,
+}
 
+export type ActiveBrandType = undefined | number;
